@@ -42,7 +42,9 @@ fun HomeScreen(
             modifier = Modifier.fillMaxWidth(),
             value = initialSaving.intValue.toString(),
             onValueChange = { newValue ->
-                initialSaving.intValue = newValue.toInt()
+                if(newValue.isNotBlank()) {
+                    initialSaving.intValue = newValue.toInt()
+                }
             },
         )
 
