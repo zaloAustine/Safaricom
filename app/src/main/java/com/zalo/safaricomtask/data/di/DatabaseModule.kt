@@ -1,8 +1,8 @@
 package com.zalo.safaricomtask.data.di
 
-import SavingsDao
 import android.content.Context
 import androidx.room.Room
+import com.zalo.safaricomtask.data.database.SavingsDao
 import com.zalo.safaricomtask.data.database.SavingsDatabase
 import com.zalo.safaricomtask.data.repository.SavingsRepository
 import com.zalo.safaricomtask.data.repository.SavingsRepositoryImpl
