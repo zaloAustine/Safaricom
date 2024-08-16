@@ -29,6 +29,7 @@ fun HomeScreen(
     val initialSaving = remember { mutableIntStateOf(0) }
     LaunchedEffect(key1 = Unit) {
         onAction.invoke(SavingsViewAction.InsertSavings(initialSaving.intValue))
+        onAction.invoke(SavingsViewAction.GetAllSavings(50))
     }
 
     val context = LocalContext.current
@@ -58,9 +59,7 @@ fun HomeScreen(
                     Toast.LENGTH_LONG
                 ).show()
             } else {
-                onAction.invoke(
-                    SavingsViewAction.InsertSavings(initialSaving.intValue)
-                )
+                onAction.invoke(SavingsViewAction.InsertSavings(initialSaving.intValue))
             }
         }, modifier = modifier.fillMaxWidth()) {
             Text("Add initial value of 50 ksh")
