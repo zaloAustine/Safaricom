@@ -110,22 +110,23 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(16.dp))
         LazyColumn {
             items(savings) { saving ->
-                SavingsItem(saving.savingWeek, saving.savingAmount)
+                SavingsItem(saving.week, saving.savingAmount,saving.total,saving.date)
             }
         }
     }
 }
 
-
 @Composable
-fun SavingsItem(week: String, amount: String) {
+fun SavingsItem(week: String, amount: String,total:String,date:String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
     ) {
         Text(text = "Week $week: ", modifier = Modifier.weight(1f))
-        Text(text = "Ksh. $amount", modifier = Modifier.weight(1f))
+        Text(text = "Date. $date", modifier = Modifier.weight(1f))
+        Text(text = "Amount. $amount", modifier = Modifier.weight(1f))
+        Text(text = "Total. $total", modifier = Modifier.weight(1f))
     }
 }
 

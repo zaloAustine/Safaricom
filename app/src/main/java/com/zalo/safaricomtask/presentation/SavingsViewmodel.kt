@@ -27,26 +27,40 @@ class SavingsViewmodel @Inject constructor(
 
     fun onAction(savingsViewAction: SavingsViewAction) {
         when (savingsViewAction) {
-            SavingsViewAction.GetAllSavings -> {
+            is SavingsViewAction.GetAllSavings -> {
                 viewModelScope.launch {
                     getAllSavingsUseCase.execute().collect { allSavings ->
-                        state = state.copy(savings = allSavings)
+
+                        val startingAmount = savingsViewAction.initialValue
+                        var runningTotal = 0
+
+                        val savings = allSavings.map { saving ->
+
+                            val amount = startingAmount * saving.savingWeek.toInt()
+                            runningTotal += amount
+
+                            Save(
+                                week = saving.savingWeek,
+                                savingAmount = saving.savingAmount,
+                                date = "",
+                                total = runningTotal.toString()
+                            )
+                        }
+                        state = state.copy(savings = savings)
                     }
                 }
             }
 
             is SavingsViewAction.InsertSavings -> {
                 viewModelScope.launch {
-                    viewModelScope.launch {
-                        deleteAllSavingsUseCase.execute()
-                       (1..52).map { week ->
-                            insertSavingsUseCase.execute(
-                                SavingsEntity(
-                                    savingWeek = week.toString(),
-                                    savingAmount = (savingsViewAction.initialValue * week).toString()
-                                )
+                    deleteAllSavingsUseCase.execute()
+                    (1..52).map { week ->
+                        insertSavingsUseCase.execute(
+                            SavingsEntity(
+                                savingWeek = week.toString(),
+                                savingAmount = (savingsViewAction.initialValue * week).toString()
                             )
-                        }
+                        )
                     }
                 }
             }
