@@ -9,13 +9,13 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface SavingsDao{
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCartItems(savingsEntities: List<SavingsEntity>)
+    suspend fun insertSavingsItems(savingsEntities: List<SavingsEntity>)
 
     @Query("SELECT * FROM savings")
-    fun getAllCartItems(): Flow<List<SavingsEntity>>
+    fun getAllSavingsItems(): Flow<List<SavingsEntity>>
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun updateCartItem(savingsEntity: SavingsEntity)
+    suspend fun updateSavingsItem(savingsEntity: SavingsEntity)
 
     @Query("DELETE FROM savings")
     suspend fun deleteSavingsEntries()

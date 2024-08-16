@@ -22,7 +22,7 @@ object DatabaseModule {
         @ApplicationContext context: Context
     ): SavingsDatabase = Room.databaseBuilder(
         context = context,
-        name = "savings.db",
+        name = "savings",
         klass = SavingsDatabase::class.java
     ).fallbackToDestructiveMigration()
         .build()
