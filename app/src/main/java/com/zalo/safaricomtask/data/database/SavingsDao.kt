@@ -17,4 +17,7 @@ interface SavingsDao{
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateCartItem(savingsEntity: SavingsEntity)
 
+    @Query("DELETE FROM savings")
+    suspend fun deleteSavingsEntries()
+
 }

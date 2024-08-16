@@ -19,4 +19,7 @@ class SavingsRepositoryImpl @Inject constructor(private val savingsDao: SavingsD
        savingsDao.updateCartItem(savingsEntity)
     }
 
+    override suspend fun deleteAllSavings() {
+        savingsDao.deleteSavingsEntries()
+    }
 }

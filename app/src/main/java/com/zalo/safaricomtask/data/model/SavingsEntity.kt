@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "savings")
 data class SavingsEntity(
-    @ColumnInfo(name = "id") @PrimaryKey(autoGenerate = false) val savingId: String,
+    @ColumnInfo(name = "id") @PrimaryKey(autoGenerate = true) val savingId: Int = 0,
     @ColumnInfo(name = "amount") val savingAmount: String,
     @ColumnInfo(name = "week") val savingWeek: String,
 )

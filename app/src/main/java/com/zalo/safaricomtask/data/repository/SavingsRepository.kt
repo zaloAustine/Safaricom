@@ -7,4 +7,5 @@ interface SavingsRepository {
     fun getAllSavings(): Flow<List<SavingsEntity>>
     suspend fun insertSavings(savingsEntity: SavingsEntity)
     suspend fun updateSavings(savingsEntity: SavingsEntity)
+    suspend fun deleteAllSavings()
 }

@@ -5,6 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.zalo.safaricomtask.data.model.SavingsEntity
+import com.zalo.safaricomtask.domain.DeleteAllSavingsUseCase
 import com.zalo.safaricomtask.domain.GetAllSavingsUseCase
 import com.zalo.safaricomtask.domain.InsertSavingsUseCase
 import com.zalo.safaricomtask.domain.UpdateSavingsUseCase
@@ -16,7 +18,8 @@ import javax.inject.Inject
 class SavingsViewmodel @Inject constructor(
     private val getAllSavingsUseCase: GetAllSavingsUseCase,
     private val insertSavingsUseCase: InsertSavingsUseCase,
-    private val updateSavingsUseCase: UpdateSavingsUseCase
+    private val updateSavingsUseCase: UpdateSavingsUseCase,
+    private val deleteAllSavingsUseCase: DeleteAllSavingsUseCase
 ) : ViewModel() {
 
     var state by mutableStateOf(SavingsViewState())
@@ -34,7 +37,17 @@ class SavingsViewmodel @Inject constructor(
 
             is SavingsViewAction.InsertSavings -> {
                 viewModelScope.launch {
-                    insertSavingsUseCase.execute(savingsViewAction.savingsEntity)
+                    viewModelScope.launch {
+                        deleteAllSavingsUseCase.execute()
+                       (1..52).map { week ->
+                            insertSavingsUseCase.execute(
+                                SavingsEntity(
+                                    savingWeek = week.toString(),
+                                    savingAmount = (savingsViewAction.initialValue * week).toString()
+                                )
+                            )
+                        }
+                    }
                 }
             }
 
