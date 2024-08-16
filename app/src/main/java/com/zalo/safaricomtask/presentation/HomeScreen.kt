@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.InputTransformation.Companion.keyboardOptions
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -18,6 +20,9 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -43,16 +48,22 @@ fun HomeScreen(
             modifier = Modifier.fillMaxWidth(),
             value = initialSaving.intValue.toString(),
             onValueChange = { newValue ->
-                if(newValue.isNotBlank()) {
+                if (newValue.isNotBlank()) {
                     initialSaving.intValue = newValue.toInt()
                 }
             },
+            keyboardOptions = KeyboardOptions(
+                capitalization = KeyboardCapitalization.None,
+                autoCorrect = true,
+                keyboardType = KeyboardType.Number,
+                imeAction = ImeAction.Next
+            )
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         FilledTonalButton(onClick = {
-            if (initialSaving.intValue == 0 ) {
+            if (initialSaving.intValue == 0) {
                 Toast.makeText(
                     context,
                     "Please add a value  greater or less than 50",
@@ -73,14 +84,14 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(16.dp))
         LazyColumn {
             items(savings) { saving ->
-                SavingsItem(saving.week, saving.savingAmount,saving.total,saving.date)
+                SavingsItem(saving.week, saving.savingAmount, saving.total, saving.date)
             }
         }
     }
 }
 
 @Composable
-fun SavingsItem(week: String, amount: String,total:String,date:String) {
+fun SavingsItem(week: String, amount: String, total: String, date: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
